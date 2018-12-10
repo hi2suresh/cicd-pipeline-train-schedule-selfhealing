@@ -1,3 +1,21 @@
+Skip to content
+ 
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ @hi2suresh Sign out
+1
+0 131 hi2suresh/cicd-pipeline-train-schedule-selfhealing
+forked from linuxacademy/cicd-pipeline-train-schedule-selfhealing
+ Code  Pull requests 0  Projects 0  Wiki  Insights  Settings
+cicd-pipeline-train-schedule-selfhealing/train-schedule-kube.yml
+381b1a7  on 23 May
+@whboyd whboyd add livenessprobe for self-healing behavior
+     
+44 lines (41 sloc)  790 Bytes
 kind: Service
 apiVersion: v1
 metadata:
@@ -34,3 +52,10 @@ spec:
         image: $DOCKER_IMAGE_NAME:$BUILD_NUMBER
         ports:
         - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+          periodSeconds: 10
